@@ -1194,6 +1194,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 "<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as
 described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they
 appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<p id="section-2-2">This specification uses the following terms from <span>[<a href="#RFC8941" class="cite xref">RFC8941</a>]</span>: Dictionary, List, String, Parameter.<a href="#section-2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="specification">
@@ -1209,7 +1210,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <p id="section-3.1-1">The URI level crawler controls are a key-value pair that can be specified two ways:<a href="#section-3.1-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.1-2.1">
-            <p id="section-3.1-2.1.1">an application level response header.<a href="#section-3.1-2.1.1" class="pilcrow">¶</a></p>
+            <p id="section-3.1-2.1.1">an application level response header structured field as specified by <span>[<a href="#RFC8941" class="cite xref">RFC8941</a>]</span>.<a href="#section-3.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.1-2.2">
             <p id="section-3.1-2.2.1">in case of HTML, one or more meta tags as defined by the HTML specification.<a href="#section-3.1-2.2.1" class="pilcrow">¶</a></p>
@@ -1220,33 +1221,25 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
           <h4 id="name-application-layer-response-">
 <a href="#section-3.1.1" class="section-number selfRef">3.1.1. </a><a href="#name-application-layer-response-" class="section-name selfRef">Application Layer Response Header</a>
           </h4>
-<p id="section-3.1.1-1">The application level response header field name is "robots-tag" and contains rules applicable to either all accessors or specifically named ones in the value. For historical reasons, implementors should support the experimental field name also — "x-robots-tag".<a href="#section-3.1.1-1" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-2">The value is a semicolon (";", 0x3B, 0x20) separated list of key-value pairs that represent a comma separated list of rules. The rules are specific to a single product token as defined by <span>[<a href="#RFC9309" class="cite xref">RFC9309</a>]</span> or a global identifier — "*". The global identifier may be omitted. The product token is separated by a "=" from its rules.<a href="#section-3.1.1-2" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-1">The application level response header field "robots-tag" is a structured field whose value is a dictionary containing list of rules applicable to either all accessors or specifically named ones. For historical reasons, implementors should also support the experimental field name, "x-robots-tag".<a href="#section-3.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-2">The value of the robots-tag field is a dictionary containing lists of rules. The rules are specific to a single product token as defined by <span>[<a href="#RFC9309" class="cite xref">RFC9309</a>]</span> or a global identifier — "*". The global identifier may be omitted. The product token is the first element of each list.<a href="#section-3.1.1-2" class="pilcrow">¶</a></p>
 <p id="section-3.1.1-3">Duplicate product tokens must be merged and the rules deduplicated.<a href="#section-3.1.1-3" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-3.1.1-4">
+<p id="section-3.1.1-4">For example, the following response header field specifies "noindex" and "nosnippet" rules for all accessors, however specifies no rules for the product token "ExampleBot":<a href="#section-3.1.1-4" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-5">abc_123;a=1;b=2;cdef_456, ghi;q=9;r="+w"
+~~~~~~~~
+Robots-Tag: *;noindex;nosnippet, ExampleBot;
+~~~~~~~~<a href="#section-3.1.1-5" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-6">The global product identifier "*" in the value may be omitted; for example, this field is equivalent to the previous example:<a href="#section-3.1.1-6" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-3.1.1-7">
 <pre>
-; key-values definition for the robots-tag response header.
-robots-tag = "robots-tag" ":" robots-tag-values
-robots-tag-values = *(value ";")
-value = ( global-product-token / ( product-token "=" ) ) [rule]
-global-product-token = "*" / OWS
-product-token =  1*( %x2D / %x41-5A / %x5F / %x61-7A )
-rule = "noindex" / "nosnippet"
-OWS = *( SP / HTAB )
-</pre><a href="#section-3.1.1-4" class="pilcrow">¶</a>
+Robots-Tag: ;noindex;nosnippet, ExampleBot=;
+</pre><a href="#section-3.1.1-7" class="pilcrow">¶</a>
 </div>
-<p id="section-3.1.1-5">For example, the following response header field specifies "noindex" and "nosnippet" rules for all accessors, however specifies no rules for the product token "ExampleBot":<a href="#section-3.1.1-5" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-3.1.1-6">
-<pre>
-Robots-Tag: *=noindex, nosnippet; ExampleBot=;
-</pre><a href="#section-3.1.1-6" class="pilcrow">¶</a>
-</div>
-<p id="section-3.1.1-7">The global product identifier "*" in the value may be omitted; for example, this field is equivalent to the previous example:<a href="#section-3.1.1-7" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-3.1.1-8">
-<pre>
-Robots-Tag: noindex, nosnippet; ExampleBot=;
-</pre><a href="#section-3.1.1-8" class="pilcrow">¶</a>
-</div>
+<p id="section-3.1.1-8">The structured field in the examples is deserialized into the following objects:
+~~~~~~~~
+["*" = [["noindex", true], ["nosnippet", true]]],
+["ExampleBot" = []]
+~~~~~~~~<a href="#section-3.1.1-8" class="pilcrow">¶</a></p>
 <p id="section-3.1.1-9">Implementors <span class="bcp14">SHOULD</span> impose a parsing limit on the field value to protect their systems. The parsing limit <span class="bcp14">MUST</span> be at least 8 kibibytes <span>[<a href="#KiB" class="cite xref">KiB</a>]</span>.<a href="#section-3.1.1-9" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1345,6 +1338,10 @@ https://www.rfc-editor.org/rfc/rfc9110.html#name-field-name-registry
         <dd>
 <span class="refAuthor">Nottingham, M.</span>, <span class="refTitle">"Web Linking"</span>, <span class="seriesInfo">RFC 8288</span>, <span class="seriesInfo">DOI 10.17487/RFC8288</span>, <time datetime="2017-10" class="refDate">October 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8288">https://www.rfc-editor.org/rfc/rfc8288</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC8941">[RFC8941]</dt>
+        <dd>
+<span class="refAuthor">Nottingham, M.</span> and <span class="refAuthor">P. Kamp</span>, <span class="refTitle">"Structured Field Values for HTTP"</span>, <span class="seriesInfo">RFC 8941</span>, <span class="seriesInfo">DOI 10.17487/RFC8941</span>, <time datetime="2021-02" class="refDate">February 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8941">https://www.rfc-editor.org/rfc/rfc8941</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC9110">[RFC9110]</dt>
         <dd>
 <span class="refAuthor">Fielding, R., Ed.</span>, <span class="refAuthor">Nottingham, M., Ed.</span>, and <span class="refAuthor">J. Reschke, Ed.</span>, <span class="refTitle">"HTTP Semantics"</span>, <span class="seriesInfo">STD 97</span>, <span class="seriesInfo">RFC 9110</span>, <span class="seriesInfo">DOI 10.17487/RFC9110</span>, <time datetime="2022-06" class="refDate">June 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9110">https://www.rfc-editor.org/rfc/rfc9110</a>&gt;</span>. </dd>
@@ -1387,6 +1384,10 @@ https://www.rfc-editor.org/rfc/rfc9110.html#name-field-name-registry
 <address class="vcard">
         <div dir="auto" class="left"><span class="fn nameRole">Gary Illyes</span></div>
 <div dir="auto" class="left"><span class="org">Google LLC.</span></div>
+<div dir="auto" class="left"><span class="street-address">Brandschenkestrasse 110</span></div>
+<div dir="auto" class="left">CH-<span class="postal-code">8002</span> <span class="locality">Zürich</span>
+</div>
+<div dir="auto" class="left"><span class="country-name">Switzerland</span></div>
 <div class="email">
 <span>Email:</span>
 <a href="mailto:garyillyes@google.com" class="email">garyillyes@google.com</a>
