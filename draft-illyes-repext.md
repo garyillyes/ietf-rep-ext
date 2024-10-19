@@ -25,11 +25,15 @@ author:
  -
     fullname: "Gary Illyes"
     organization: Google LLC.
+    street: "Brandschenkestrasse 110"
+    city: "Zürich"
+    code: "8002"
+    country: "Switzerland"
     email: "garyillyes@google.com"
-
 normative:
   RFC2817:
   RFC8288:
+  RFC8941:
   RFC9110:
   RFC9309:
 informative:
@@ -57,44 +61,42 @@ Application developers are requested to honor these tags. The tags are not a for
 
 {::boilerplate bcp14-tagged}
 
+This specification uses the following terms from [RFC8941]: Dictionary, List, String, Parameter.
+
 # Specification
 
 ## Robots control
 
 The URI level crawler controls are a key-value pair that can be specified two ways:
 
-* an application level response header.
+* an application level response header structured field as specified by [RFC8941].
 * in case of HTML, one or more meta tags as defined by the HTML specification.
 
 ### Application Layer Response Header
 
-The application level response header field name is "robots-tag" and contains rules applicable to either all accessors or specifically named ones in the value. For historical reasons, implementors should support the experimental field name also — "x-robots-tag".
+The application level response header field "robots-tag" is a structured field whose value is a dictionary containing list of rules applicable to either all accessors or specifically named ones. For historical reasons, implementors should also support the experimental field name, "x-robots-tag".
 
-The value is a semicolon (";", 0x3B, 0x20) separated list of key-value pairs that represent a comma separated list of rules. The rules are specific to a single product token as defined by [RFC9309] or a global identifier — "*". The global identifier may be omitted. The product token is separated by a "=" from its rules.
+The value of the robots-tag field is a dictionary containing lists of rules. The rules are specific to a single product token as defined by [RFC9309] or a global identifier — "*". The global identifier may be omitted. The product token is the first element of each list.
 
 Duplicate product tokens must be merged and the rules deduplicated.
 
-~~~~~~~~
-; key-values definition for the robots-tag response header.
-robots-tag = "robots-tag" ":" robots-tag-values
-robots-tag-values = *(value ";")
-value = ( global-product-token / ( product-token "=" ) ) [rule]
-global-product-token = "*" / OWS
-product-token =  1*( %x2D / %x41-5A / %x5F / %x61-7A )
-rule = "noindex" / "nosnippet"
-OWS = *( SP / HTAB )
-~~~~~~~~
-
 For example, the following response header field specifies "noindex" and "nosnippet" rules for all accessors, however specifies no rules for the product token "ExampleBot":
 
+abc_123;a=1;b=2;cdef_456, ghi;q=9;r=\"+w\"
 ~~~~~~~~
-Robots-Tag: *=noindex, nosnippet; ExampleBot=;
+Robots-Tag: *;noindex;nosnippet, ExampleBot;
 ~~~~~~~~
 
 The global product identifier "*" in the value may be omitted; for example, this field is equivalent to the previous example:
 
 ~~~~~~~~
-Robots-Tag: noindex, nosnippet; ExampleBot=;
+Robots-Tag: ;noindex;nosnippet, ExampleBot=;
+~~~~~~~~
+
+The structured field in the examples is deserialized into the following objects:
+~~~~~~~~
+["*" = [["noindex", true], ["nosnippet", true]]],
+["ExampleBot" = []]
 ~~~~~~~~
 
 Implementors SHOULD impose a parsing limit on the field value to protect their systems. The parsing limit MUST be at least 8 kibibytes [KiB].
