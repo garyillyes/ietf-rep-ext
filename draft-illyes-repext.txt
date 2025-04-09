@@ -16,7 +16,7 @@ Abstract
    This document extends RFC9309 by specifying additional URI level
    controls through application level header and HTML meta tags
    originally developed in 1996.  Additionally it moves the response
-   header out of the experimental header space (i.e.  "X-") and defines
+   header out of the experimental header space (i.e. "X-") and defines
    the combinability of multiple headers, which was previously not
    possible.
 
@@ -141,8 +141,7 @@ Table of Contents
    and "nosnippet" rules for all accessors, however specifies no rules
    for the product token "ExampleBot":
 
-   abc_123;a=1;b=2;cdef_456, ghi;q=9;r="+w" ~~~~~~~~ Robots-Tag:
-   *;noindex;nosnippet, ExampleBot; ~~~~~~~~
+   Robots-Tag: *;noindex;nosnippet, ExampleBot;
 
    The global product identifier "*" in the value may be omitted; for
    example, this field is equivalent to the previous example:
@@ -150,8 +149,8 @@ Table of Contents
    Robots-Tag: ;noindex;nosnippet, ExampleBot=;
 
    The structured field in the examples is deserialized into the
-   following objects: ~~~~~~~~ ["*" = [["noindex", true], ["nosnippet",
-   true]]], ["ExampleBot" = []] ~~~~~~~~
+   following objects: ~~~~~~~~ "*" = [ ["noindex", true], ["nosnippet",
+   true] ], "ExampleBot" = [] ~~~~~~~~
 
    Implementors SHOULD impose a parsing limit on the field value to
    protect their systems.  The parsing limit MUST be at least 8
