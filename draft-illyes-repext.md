@@ -82,7 +82,7 @@ Duplicate product tokens must be merged and the rules deduplicated.
 
 For example, the following response header field specifies "noindex" and "nosnippet" rules for all accessors, however specifies no rules for the product token "ExampleBot":
 
-abc_123;a=1;b=2;cdef_456, ghi;q=9;r=\"+w\"
+
 ~~~~~~~~
 Robots-Tag: *;noindex;nosnippet, ExampleBot;
 ~~~~~~~~
@@ -95,8 +95,11 @@ Robots-Tag: ;noindex;nosnippet, ExampleBot=;
 
 The structured field in the examples is deserialized into the following objects:
 ~~~~~~~~
-["*" = [["noindex", true], ["nosnippet", true]]],
-["ExampleBot" = []]
+"*" = [
+       ["noindex", true],
+       ["nosnippet", true]
+      ],
+"ExampleBot" = []
 ~~~~~~~~
 
 Implementors SHOULD impose a parsing limit on the field value to protect their systems. The parsing limit MUST be at least 8 kibibytes [KiB].
