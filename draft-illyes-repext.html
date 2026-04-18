@@ -1257,40 +1257,47 @@ the <span>[<a href="#HTML-META" class="cite xref">HTML-META</a>]</span> specific
           <h4 id="name-http-response-header">
 <a href="#section-3.1.1" class="section-number selfRef">3.1.1. </a><a href="#name-http-response-header" class="section-name selfRef">HTTP Response Header</a>
           </h4>
-<p id="section-3.1.1-1">The robots-tag field is a List as defined in <span>[<a href="#STRUCTURED-FIELD-VALUES" class="cite xref">STRUCTURED-FIELD-VALUES</a>]</span>. Each
+<p id="section-3.1.1-1">The <code>robots-tag</code> field is a List as defined in <span>[<a href="#STRUCTURED-FIELD-VALUES" class="cite xref">STRUCTURED-FIELD-VALUES</a>]</span>. Each
 member of the List is an Item representing a product token. Rules applicable to
 a product token are defined as Parameters of that Item. For historical reasons,
-implementors <span class="bcp14">SHOULD</span> also support the experimental field name <code>x-robots-tag</code>.<a href="#section-3.1.1-1" class="pilcrow">¶</a></p>
+implementors <span class="bcp14">SHOULD</span> also support the experimental field name x-robots-tag.<a href="#section-3.1.1-1" class="pilcrow">¶</a></p>
 <p id="section-3.1.1-2">The product token is either a specific string as defined in
-Section 2.2.1 of <span>[<a href="#ROBOTSTXT" class="cite xref">ROBOTSTXT</a>]</span> or the global identifier <code>*</code>. If a product token
-appears multiple times in the field, the Parameters from all instances <span class="bcp14">MUST</span> be
-merged and deduplicated.<a href="#section-3.1.1-2" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-3">For example, the following response header field specifies <code>noindex</code> and
-<code>nosnippet</code> rules for all accessors, however specifies no rules for the product
-token <code>ExampleBot</code>:<a href="#section-3.1.1-3" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-3.1.1-4">
+Section 2.2.1 of <span>[<a href="#ROBOTSTXT" class="cite xref">ROBOTSTXT</a>]</span> or the global identifier <code>*</code>. All rules defined
+in this specification are restrictive. The absence of a rule for a specific
+instruction constitutes as no instruction.<a href="#section-3.1.1-2" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-3">If a product token appears multiple times in the field, or if rules are
+provided for both a specific product token and the global <code>*</code> identifier, the
+implementor <span class="bcp14">MUST</span> apply the union of all restrictive rules. A restriction applied
+to the global <code>*</code> token applies to all accessors regardless of whether a
+specific product token is present.<a href="#section-3.1.1-3" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-4">For example, the following response header field specifies a global
+<code>nosnippet</code> rule for all accessors, and an additional <code>noindex</code> rule
+specifically for <code>ExampleBot</code>:<a href="#section-3.1.1-4" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-3.1.1-5">
 <pre>
-Robots-Tag: *;noindex;nosnippet, ExampleBot;
-</pre><a href="#section-3.1.1-4" class="pilcrow">¶</a>
+Robots-Tag: *;nosnippet, ExampleBot;noindex
+</pre><a href="#section-3.1.1-5" class="pilcrow">¶</a>
 </div>
-<p id="section-3.1.1-5">The structured field in the examples is deserialized into the following objects:<a href="#section-3.1.1-5" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-3.1.1-6">
+<p id="section-3.1.1-6">The structured field in the examples is deserialized into the following objects:<a href="#section-3.1.1-6" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-3.1.1-7">
 <pre>
 "*" = [
-       ["noindex", true],
        ["nosnippet", true]
       ],
-"ExampleBot" = []
-</pre><a href="#section-3.1.1-6" class="pilcrow">¶</a>
+"ExampleBot" = [
+      ["noindex", true],
+      ["nosnippet", true]
+      ]
+</pre><a href="#section-3.1.1-7" class="pilcrow">¶</a>
 </div>
-<p id="section-3.1.1-7">Implementors <span class="bcp14">SHOULD</span> impose a parsing limit on the field value to protect their
-systems. The parsing limit <span class="bcp14">MUST</span> be at least 8 kibibytes <span>[<a href="#KiB" class="cite xref">KiB</a>]</span>.<a href="#section-3.1.1-7" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-8">For a <code>robots-tag</code> field that exceeds the implementor's parsing limit, the
+<p id="section-3.1.1-8">Implementors <span class="bcp14">SHOULD</span> impose a parsing limit on the field value to protect their
+systems. The parsing limit <span class="bcp14">MUST</span> be at least 8 kibibytes <span>[<a href="#KiB" class="cite xref">KiB</a>]</span>.<a href="#section-3.1.1-8" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-9">For a <code>robots-tag</code> field that exceeds the implementor's parsing limit, the
 implementor <span class="bcp14">MUST</span> process the data up to that limit. Any complete and valid List
 members found within the processed bytes <span class="bcp14">MUST</span> be honored. Any partially
 transmitted or truncated List member at the limit, and all subsequent bytes in
 that field, <span class="bcp14">MUST</span> be ignored. This ensures consistency with the processing of
-<code>robots.txt</code> files as specified in Section 2.1.1 of <span>[<a href="#ROBOTSTXT" class="cite xref">ROBOTSTXT</a>]</span>.<a href="#section-3.1.1-8" class="pilcrow">¶</a></p>
+<code>robots.txt</code> files as specified in Section 2.1.1 of <span>[<a href="#ROBOTSTXT" class="cite xref">ROBOTSTXT</a>]</span>.<a href="#section-3.1.1-9" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="html-meta-element">
@@ -1311,9 +1318,15 @@ applicable to a single requestor. For example:<a href="#section-3.1.2-2" class="
 &lt;meta name="examplebot" content="nosnippet"&gt;
 </pre><a href="#section-3.1.2-3" class="pilcrow">¶</a>
 </div>
-<p id="section-3.1.2-4">Multiple robots meta elements may appear in a single HTML document. Requestors
-must obey the sum of negative rules specific to their product token and the
-global product token.<a href="#section-3.1.2-4" class="pilcrow">¶</a></p>
+<p id="section-3.1.2-4">Multiple robots meta elements may appear in a single HTML document. The
+implementor <span class="bcp14">MUST</span> apply the union of all rules found in all applicable elements.
+This includes rules specified for the global <code>robots</code> token and rules specified
+for the accessor's specific product token.<a href="#section-3.1.2-4" class="pilcrow">¶</a></p>
+<p id="section-3.1.2-5">Because all rules specified in this document are restrictive, they are
+inherently additive. An accessor cannot "opt-out" of a restriction defined in a
+global 'robots' tag by being mentioned in a specific tag without that
+restriction. If any applicable tag contains a restrictive rule, that rule <span class="bcp14">MUST</span>
+be honored.<a href="#section-3.1.2-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="robots-controls-rules">
