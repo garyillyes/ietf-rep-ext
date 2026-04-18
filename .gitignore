@@ -21,3 +21,4 @@ draft-illyes-repext.xml
 package-lock.json
 report.xml
 !requirements.txt
+ietf-rep-ext.code-workspace
