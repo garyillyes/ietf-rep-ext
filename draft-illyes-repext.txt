@@ -130,8 +130,13 @@ Table of Contents
    Robots-Tag: *;noindex;nosnippet, ExampleBot;
 
    The structured field in the examples is deserialized into the
-   following objects: ~~~~~~~~ "*" = [ ["noindex", true], ["nosnippet",
-   true] ], "ExampleBot" = [] ~~~~~~~~
+   following objects:
+
+   "*" = [
+          ["noindex", true],
+          ["nosnippet", true]
+         ],
+   "ExampleBot" = []
 
    Implementors SHOULD impose a parsing limit on the field value to
    protect their systems.  The parsing limit MUST be at least 8
