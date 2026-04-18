@@ -14,11 +14,11 @@ Expires: 20 October 2026
 Abstract
 
    This document extends RFC9309 by specifying additional URL level
-   controls through application level header and HTML meta tags
-   originally developed in 1996.  Additionally it moves the response
-   header out of the experimental header space (i.e. "X-") and defines
-   the combinability of multiple headers, which was previously not
-   possible.
+   controls through an HTTP response header and, foir historical
+   reasons, through HTML meta tags originally developed in 1996.
+   Additionally it moves the HTTP response header out of the
+   experimental header space (i.e., "X-") and defines the combinability
+   of multiple headers, which was previously not possible.
 
 Status of This Memo
 
@@ -68,17 +68,18 @@ Table of Contents
 
 1.  Introduction
 
-   While the Robots Exclusion Protocol [ROBOTSTXT]enables service owners
-   to control how, if at all, automated clients known as crawlers may
-   access the URLs on their services as defined by [WEBLINKING], the
+   While the Robots Exclusion Protocol [ROBOTSTXT] enables service
+   owners to control how, if at all, automated clients known as crawlers
+   may access the URLs on their services as defined by [WEBLINKING], the
    protocol doesn't provide controls on how the data returned by their
    service may be used upon allowed access.
 
    Originally developed in 1996 and widely adopted since, the use-case
    control is left to URL level controls implemented in the response
-   headers, or in case of HTML in the form of a meta tag.  This document
-   specifies these control tags, and in case of the response header
-   field, brings it to standards compliance with [HTTP-SEMANTICS].
+   headers, or in case of HTML in the form of a meta tag as defined by
+   [HTML-META].  This document specifies these control tags, and in case
+   of the response header field, brings it to standards compliance with
+   [HTTP-SEMANTICS].
 
    Application developers are requested to honor these tags.  The tags
    are not a form of access authorization however.
@@ -104,21 +105,21 @@ Table of Contents
    *  an application level response header structured field as specified
       by [STRUCTURED-FIELD-VALUES].
 
-   *  in case of HTML, one or more meta tags as defined by the HTML
-      specification.
+   *  for hiostorical reasons, in case of HTML, one or more meta tags as
+      defined by the [HTML-META] specification.
 
 3.1.1.  Application Layer Response Header
 
-   The application level response header field robots-tag is a
-   structured field whose value is a dictionary containing list of rules
-   applicable to either all accessors or specifically named ones.  For
-   historical reasons, implementors should also support the experimental
-   field name, x-robots-tag.
+   The HTTP response header field robots-tag is a structured field whose
+   value is a dictionary containing list of rules applicable to either
+   all accessors or specifically named ones.  For historical reasons,
+   implementors should also support the experimental field name, x-
+   robots-tag.
 
    The value of the robots-tag field is a dictionary containing lists of
    rules.  The rules are specific to a single product token as defined
-   by [ROBOTSTXT] or a global identifier — "*".  The product token is
-   the first element of each list.
+   by Section 2.2.1. of [ROBOTSTXT] or a global identifier — "*".  The
+   product token is the first element of each list.
 
    Duplicate product tokens must be merged and the rules deduplicated.
 
@@ -139,7 +140,7 @@ Table of Contents
 3.1.2.  HTML meta element
 
    For historical reasons the robots-tag header values may be specified
-   by HTMLservice owners as an HTML meta tag.  In case of the meta tag,
+   by HTML service owners as an HTML meta tag.  In case of the meta tag,
    the name attribute is used to specify the product token, and the
    content attribute to specify the comma separated robots-tag rules.
 
@@ -164,8 +165,7 @@ Table of Contents
    *  nosnippet - instructs the parser to not reproduce any stored data
       as an excerpt snippet.
 
-   The values are case insensitive.  Values unspecified by this document
-   MAY be ignored, depending on the consumer's requirements.
+   The values are case insensitive.
 
    Implementors may support other rules as specified in Section 2.2.4 of
    [ROBOTSTXT].
@@ -174,22 +174,20 @@ Table of Contents
 
    The rules specified for a specific product token MUST be obeyed until
    the rules have changed.  Implementors MAY use standard cache control
-   as defined in [HTTP-SEMANTICS] for caching robots-tag rules.
+   as defined in [HTTP-CACHING] for caching robots-tag rules.
    Implementors SHOULD refresh their caches within a reasonable time
    frame.
 
 4.  Security Considerations
 
    The robots-tag is not a substitute for valid content security
-   measures.  To control access to the URL paths in a robots.txt file,
-   users of the protocol should employ a valid security measure relevant
-   to the application layer on which the robots.txt file is served — for
-   example, in the case of HTTP, HTTP Authentication as defined in
-   [HTTP-SEMANTICS].
+   measures.  To control access to the URL paths where the robots-tag
+   appears, service owners SHOULD employ a valid security measure such
+   as HTTP Authentication as defined in [HTTP-SEMANTICS].
 
    The content of the robots-tag header field is not secure, private or
    integrity-guaranteed, and due caution should be exercised when using
-   it.  Use of Transport Layer Security (TLS) with HTTP
+   it.  Use of Transport Layer Security ([TLS]) with HTTP
    ([HTTP-SEMANTICS]) is currently the only end-to-end way to provide
    such protection.
 
@@ -204,12 +202,23 @@ Table of Contents
 
 5.  IANA Considerations
 
-   TODO(illyes): https://www.rfc-editor.org/rfc/rfc9110.html#name-field-
-   name-registry
+   IANA is requested to register the following HTTP field name in the
+   "Hypertext Transfer Protocol (HTTP) Field Name Registry" according to
+   the procedures defined in Section 18.4 of [HTTP-SEMANTICS]:
+
+   Field Name: Robots-Tag Template: None Status: permanent Reference:
+   [This document] Comments: This field name replaces the historical and
+   experimental X-Robots-Tag.
 
 6.  References
 
 6.1.  Normative References
+
+   [HTTP-CACHING]
+              Fielding, R., Ed., Nottingham, M., Ed., and J. Reschke,
+              Ed., "HTTP Caching", STD 98, RFC 9111,
+              DOI 10.17487/RFC9111, June 2022,
+              <https://www.rfc-editor.org/rfc/rfc9111>.
 
    [HTTP-SEMANTICS]
               Fielding, R., Ed., Nottingham, M., Ed., and J. Reschke,
@@ -221,10 +230,6 @@ Table of Contents
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/rfc/rfc2119>.
-
-   [RFC2817]  Khare, R. and S. Lawrence, "Upgrading to TLS Within
-              HTTP/1.1", RFC 2817, DOI 10.17487/RFC2817, May 2000,
-              <https://www.rfc-editor.org/rfc/rfc2817>.
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
@@ -241,12 +246,21 @@ Table of Contents
               HTTP", RFC 8941, DOI 10.17487/RFC8941, February 2021,
               <https://www.rfc-editor.org/rfc/rfc8941>.
 
+   [TLS]      Rescorla, E., "The Transport Layer Security (TLS) Protocol
+              Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018,
+              <https://www.rfc-editor.org/rfc/rfc8446>.
+
    [WEBLINKING]
               Nottingham, M., "Web Linking", RFC 8288,
               DOI 10.17487/RFC8288, October 2017,
               <https://www.rfc-editor.org/rfc/rfc8288>.
 
 6.2.  Informative References
+
+   [HTML-META]
+              "HTML Meta Element", 14 April 2026,
+              <https://html.spec.whatwg.org/multipage/
+              semantics.html#the-meta-element>.
 
    [KiB]      "KibiByte", 14 October 2022,
               <https://simple.wikipedia.org/wiki/Kibibyte>.

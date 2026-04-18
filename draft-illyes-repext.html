@@ -8,10 +8,10 @@
 <meta content="Gary Illyes" name="author">
 <meta content='
        This document extends RFC9309 by specifying additional URL level controls
-through application level header and HTML meta tags originally developed in
-1996. Additionally it moves the response header out of the experimental header
-space (i.e. "X-") and defines the combinability of multiple headers, which was
-previously not possible. 
+through an HTTP response header and, foir historical reasons, through HTML meta
+tags originally developed in 1996. Additionally it moves the HTTP response
+header out of the experimental header space (i.e., "X-") and defines the
+combinability of multiple headers, which was previously not possible. 
     ' name="description">
 <meta content="xml2rfc 3.33.0" name="generator">
 <meta content="robots.txt" name="keyword">
@@ -1085,10 +1085,10 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
 <p id="section-abstract-1">This document extends RFC9309 by specifying additional URL level controls
-through application level header and HTML meta tags originally developed in
-1996. Additionally it moves the response header out of the experimental header
-space (i.e. "X-") and defines the combinability of multiple headers, which was
-previously not possible.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+through an HTTP response header and, foir historical reasons, through HTML meta
+tags originally developed in 1996. Additionally it moves the HTTP response
+header out of the experimental header space (i.e., "X-") and defines the
+combinability of multiple headers, which was previously not possible.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <div id="status-of-memo">
 <section id="section-boilerplate.1">
@@ -1195,16 +1195,16 @@ previously not possible.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">While the Robots Exclusion Protocol <span>[<a href="#ROBOTSTXT" class="cite xref">ROBOTSTXT</a>]</span>enables service owners to
+<p id="section-1-1">While the Robots Exclusion Protocol <span>[<a href="#ROBOTSTXT" class="cite xref">ROBOTSTXT</a>]</span> enables service owners to
 control how, if at all, automated clients known as crawlers may access the URLs
 on their services as defined by <span>[<a href="#WEBLINKING" class="cite xref">WEBLINKING</a>]</span>, the protocol doesn't provide
 controls on how the data returned by their service may be used upon allowed
 access.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">Originally developed in 1996 and widely adopted since, the use-case control is
 left to URL level controls implemented in the response headers, or in case of
-HTML in the form of a meta tag. This document specifies these control tags,
-and in case of the response header field, brings it to standards compliance with
-<span>[<a href="#HTTP-SEMANTICS" class="cite xref">HTTP-SEMANTICS</a>]</span>.<a href="#section-1-2" class="pilcrow">¶</a></p>
+HTML in the form of a meta tag as defined by <span>[<a href="#HTML-META" class="cite xref">HTML-META</a>]</span>. This document
+specifies these control tags, and in case of the response header field, brings
+it to standards compliance with <span>[<a href="#HTTP-SEMANTICS" class="cite xref">HTTP-SEMANTICS</a>]</span>.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3">Application developers are requested to honor these tags. The tags are not a
 form of access authorization however.<a href="#section-1-3" class="pilcrow">¶</a></p>
 </section>
@@ -1240,7 +1240,8 @@ ways:<a href="#section-3.1-1" class="pilcrow">¶</a></p>
 <span>[<a href="#STRUCTURED-FIELD-VALUES" class="cite xref">STRUCTURED-FIELD-VALUES</a>]</span>.<a href="#section-3.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.1-2.2">
-            <p id="section-3.1-2.2.1">in case of HTML, one or more meta tags as defined by the HTML specification.<a href="#section-3.1-2.2.1" class="pilcrow">¶</a></p>
+            <p id="section-3.1-2.2.1">for hiostorical reasons, in case of HTML, one or more meta tags as defined by
+the <span>[<a href="#HTML-META" class="cite xref">HTML-META</a>]</span> specification.<a href="#section-3.1-2.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <div id="application-layer-response-header">
@@ -1248,13 +1249,14 @@ ways:<a href="#section-3.1-1" class="pilcrow">¶</a></p>
           <h4 id="name-application-layer-response-">
 <a href="#section-3.1.1" class="section-number selfRef">3.1.1. </a><a href="#name-application-layer-response-" class="section-name selfRef">Application Layer Response Header</a>
           </h4>
-<p id="section-3.1.1-1">The application level response header field <code>robots-tag</code> is a structured field
+<p id="section-3.1.1-1">The HTTP response header field <code>robots-tag</code> is a structured field
 whose value is a dictionary containing list of rules applicable to either all
 accessors or specifically named ones. For historical reasons, implementors
 should also support the experimental field name, <code>x-robots-tag</code>.<a href="#section-3.1.1-1" class="pilcrow">¶</a></p>
 <p id="section-3.1.1-2">The value of the <code>robots-tag</code> field is a dictionary containing lists of rules.
-The rules are specific to a single product token as defined by <span>[<a href="#ROBOTSTXT" class="cite xref">ROBOTSTXT</a>]</span> or
-a global identifier — "*". The product token is the first element of each list.<a href="#section-3.1.1-2" class="pilcrow">¶</a></p>
+The rules are specific to a single product token as defined by Section 2.2.1. of
+<span>[<a href="#ROBOTSTXT" class="cite xref">ROBOTSTXT</a>]</span> or a global identifier — "*". The product token is the first
+element of each list.<a href="#section-3.1.1-2" class="pilcrow">¶</a></p>
 <p id="section-3.1.1-3">Duplicate product tokens must be merged and the rules deduplicated.<a href="#section-3.1.1-3" class="pilcrow">¶</a></p>
 <p id="section-3.1.1-4">For example, the following response header field specifies <code>noindex</code> and
 <code>nosnippet</code> rules for all accessors, however specifies no rules for the product
@@ -1282,7 +1284,7 @@ systems. The parsing limit <span class="bcp14">MUST</span> be at least 8 kibibyt
 <a href="#section-3.1.2" class="section-number selfRef">3.1.2. </a><a href="#name-html-meta-element" class="section-name selfRef">HTML meta element</a>
           </h4>
 <p id="section-3.1.2-1">For historical reasons the <code>robots-tag</code> header values may be specified by
-HTMLservice owners as an HTML meta tag. In case of the meta tag, the name
+HTML service owners as an HTML meta tag. In case of the meta tag, the name
 attribute is used to specify the product token, and the content attribute to
 specify the comma separated robots-tag rules.<a href="#section-3.1.2-1" class="pilcrow">¶</a></p>
 <p id="section-3.1.2-2">As with the header, the product token may be a global token, <code>robots</code>, which
@@ -1307,14 +1309,15 @@ global product token.<a href="#section-3.1.2-4" class="pilcrow">¶</a></p>
 <p id="section-3.1.3-1">The possible values of the rules are:<a href="#section-3.1.3-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.1.3-2.1">
-              <p id="section-3.1.3-2.1.1"><code>noindex</code> - instructs the parser to not store the served data in its publicly accessible index.<a href="#section-3.1.3-2.1.1" class="pilcrow">¶</a></p>
+              <p id="section-3.1.3-2.1.1"><code>noindex</code> - instructs the parser to not store the served data in its publicly
+accessible index.<a href="#section-3.1.3-2.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-3.1.3-2.2">
-              <p id="section-3.1.3-2.2.1"><code>nosnippet</code> - instructs the parser to not reproduce any stored data as an excerpt snippet.<a href="#section-3.1.3-2.2.1" class="pilcrow">¶</a></p>
+              <p id="section-3.1.3-2.2.1"><code>nosnippet</code> - instructs the parser to not reproduce any stored data as an
+excerpt snippet.<a href="#section-3.1.3-2.2.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
-<p id="section-3.1.3-3">The values are case insensitive. Values unspecified by this document <span class="bcp14">MAY</span> be
-ignored, depending on the consumer's requirements.<a href="#section-3.1.3-3" class="pilcrow">¶</a></p>
+<p id="section-3.1.3-3">The values are case insensitive.<a href="#section-3.1.3-3" class="pilcrow">¶</a></p>
 <p id="section-3.1.3-4">Implementors may support other rules as specified in Section 2.2.4 of
 <span>[<a href="#ROBOTSTXT" class="cite xref">ROBOTSTXT</a>]</span>.<a href="#section-3.1.3-4" class="pilcrow">¶</a></p>
 </section>
@@ -1326,7 +1329,7 @@ ignored, depending on the consumer's requirements.<a href="#section-3.1.3-3" cla
           </h4>
 <p id="section-3.1.4-1">The rules specified for a specific product token <span class="bcp14">MUST</span> be obeyed until the rules
 have changed. Implementors <span class="bcp14">MAY</span> use standard cache control as defined in
-<span>[<a href="#HTTP-SEMANTICS" class="cite xref">HTTP-SEMANTICS</a>]</span> for caching <code>robots-tag</code> rules. Implementors <span class="bcp14">SHOULD</span> refresh
+<span>[<a href="#HTTP-CACHING" class="cite xref">HTTP-CACHING</a>]</span> for caching <code>robots-tag</code> rules. Implementors <span class="bcp14">SHOULD</span> refresh
 their caches within a reasonable time frame.<a href="#section-3.1.4-1" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1340,14 +1343,13 @@ their caches within a reasonable time frame.<a href="#section-3.1.4-1" class="pi
 <a href="#section-4" class="section-number selfRef">4. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
 <p id="section-4-1">The <code>robots-tag</code> is not a substitute for valid content security measures. To
-control access to the URL paths in a <code>robots.txt</code> file, users of the protocol
-should employ a valid security measure relevant to the application layer on
-which the robots.txt file is served — for example, in the case of HTTP,
-HTTP Authentication as defined in <span>[<a href="#HTTP-SEMANTICS" class="cite xref">HTTP-SEMANTICS</a>]</span>.<a href="#section-4-1" class="pilcrow">¶</a></p>
+control access to the URL paths where the <code>robots-tag</code> appears, service owners
+<span class="bcp14">SHOULD</span> employ a valid security measure such as HTTP Authentication as defined in
+<span>[<a href="#HTTP-SEMANTICS" class="cite xref">HTTP-SEMANTICS</a>]</span>.<a href="#section-4-1" class="pilcrow">¶</a></p>
 <p id="section-4-2">The content of the <code>robots-tag</code> header field is not secure, private or
 integrity-guaranteed, and due caution should be exercised when using it. Use of
-Transport Layer Security (TLS) with HTTP (<span>[<a href="#HTTP-SEMANTICS" class="cite xref">HTTP-SEMANTICS</a>]</span>) is currently the
-only end-to-end way to provide such protection.<a href="#section-4-2" class="pilcrow">¶</a></p>
+Transport Layer Security (<span>[<a href="#TLS" class="cite xref">TLS</a>]</span>) with HTTP (<span>[<a href="#HTTP-SEMANTICS" class="cite xref">HTTP-SEMANTICS</a>]</span>) is currently
+the only end-to-end way to provide such protection.<a href="#section-4-2" class="pilcrow">¶</a></p>
 <p id="section-4-3">In case of a <code>robots-tag</code> specified in a HTML meta element, implementors should
 consider only the <code>meta</code> elements specified in the head element of the HTML
 document, which is generally only accessible to the service owner.<a href="#section-4-3" class="pilcrow">¶</a></p>
@@ -1360,10 +1362,14 @@ on how much data they will parse; see section N for the lower limit.<a href="#se
       <h2 id="name-iana-considerations">
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
-<p id="section-5-1"><code>
-TODO(illyes):
-https://www.rfc-editor.org/rfc/rfc9110.html#name-field-name-registry
-</code><a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-1">IANA is requested to register the following HTTP field name in the
+"Hypertext Transfer Protocol (HTTP) Field Name Registry" according to the
+procedures defined in Section 18.4 of <span>[<a href="#HTTP-SEMANTICS" class="cite xref">HTTP-SEMANTICS</a>]</span>:<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-2">Field Name: <code>Robots-Tag</code>
+Template: None
+Status: permanent
+Reference: [This document]
+Comments: This field name replaces the historical and experimental <code>X-Robots-Tag</code>.<a href="#section-5-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="sec-combined-references">
@@ -1377,6 +1383,10 @@ https://www.rfc-editor.org/rfc/rfc9110.html#name-field-name-registry
 <a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
+<dt id="HTTP-CACHING">[HTTP-CACHING]</dt>
+        <dd>
+<span class="refAuthor">Fielding, R., Ed.</span>, <span class="refAuthor">Nottingham, M., Ed.</span>, and <span class="refAuthor">J. Reschke, Ed.</span>, <span class="refTitle">"HTTP Caching"</span>, <span class="seriesInfo">STD 98</span>, <span class="seriesInfo">RFC 9111</span>, <span class="seriesInfo">DOI 10.17487/RFC9111</span>, <time datetime="2022-06" class="refDate">June 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9111">https://www.rfc-editor.org/rfc/rfc9111</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="HTTP-SEMANTICS">[HTTP-SEMANTICS]</dt>
         <dd>
 <span class="refAuthor">Fielding, R., Ed.</span>, <span class="refAuthor">Nottingham, M., Ed.</span>, and <span class="refAuthor">J. Reschke, Ed.</span>, <span class="refTitle">"HTTP Semantics"</span>, <span class="seriesInfo">STD 97</span>, <span class="seriesInfo">RFC 9110</span>, <span class="seriesInfo">DOI 10.17487/RFC9110</span>, <time datetime="2022-06" class="refDate">June 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9110">https://www.rfc-editor.org/rfc/rfc9110</a>&gt;</span>. </dd>
@@ -1384,10 +1394,6 @@ https://www.rfc-editor.org/rfc/rfc9110.html#name-field-name-registry
 <dt id="RFC2119">[RFC2119]</dt>
         <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC2817">[RFC2817]</dt>
-        <dd>
-<span class="refAuthor">Khare, R.</span> and <span class="refAuthor">S. Lawrence</span>, <span class="refTitle">"Upgrading to TLS Within HTTP/1.1"</span>, <span class="seriesInfo">RFC 2817</span>, <span class="seriesInfo">DOI 10.17487/RFC2817</span>, <time datetime="2000-05" class="refDate">May 2000</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2817">https://www.rfc-editor.org/rfc/rfc2817</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8174">[RFC8174]</dt>
         <dd>
@@ -1400,6 +1406,10 @@ https://www.rfc-editor.org/rfc/rfc9110.html#name-field-name-registry
 <dt id="STRUCTURED-FIELD-VALUES">[STRUCTURED-FIELD-VALUES]</dt>
         <dd>
 <span class="refAuthor">Nottingham, M.</span> and <span class="refAuthor">P. Kamp</span>, <span class="refTitle">"Structured Field Values for HTTP"</span>, <span class="seriesInfo">RFC 8941</span>, <span class="seriesInfo">DOI 10.17487/RFC8941</span>, <time datetime="2021-02" class="refDate">February 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8941">https://www.rfc-editor.org/rfc/rfc8941</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="TLS">[TLS]</dt>
+        <dd>
+<span class="refAuthor">Rescorla, E.</span>, <span class="refTitle">"The Transport Layer Security (TLS) Protocol Version 1.3"</span>, <span class="seriesInfo">RFC 8446</span>, <span class="seriesInfo">DOI 10.17487/RFC8446</span>, <time datetime="2018-08" class="refDate">August 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8446">https://www.rfc-editor.org/rfc/rfc8446</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="WEBLINKING">[WEBLINKING]</dt>
       <dd>
@@ -1414,6 +1424,10 @@ https://www.rfc-editor.org/rfc/rfc9110.html#name-field-name-registry
 <a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
+<dt id="HTML-META">[HTML-META]</dt>
+        <dd>
+<span class="refTitle">"HTML Meta Element"</span>, <time datetime="2026-04-14" class="refDate">14 April 2026</time>, <span>&lt;<a href="https://html.spec.whatwg.org/multipage/semantics.html#the-meta-element">https://html.spec.whatwg.org/multipage/semantics.html#the-meta-element</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="KiB">[KiB]</dt>
       <dd>
 <span class="refTitle">"KibiByte"</span>, <time datetime="2022-10-14" class="refDate">14 October 2022</time>, <span>&lt;<a href="https://simple.wikipedia.org/wiki/Kibibyte">https://simple.wikipedia.org/wiki/Kibibyte</a>&gt;</span>. </dd>
