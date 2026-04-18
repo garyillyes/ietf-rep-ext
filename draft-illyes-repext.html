@@ -8,7 +8,7 @@
 <meta content="Gary Illyes" name="author">
 <meta content='
        This document extends RFC9309 by specifying additional URL level controls
-through an HTTP response header and, foir historical reasons, through HTML meta
+through an HTTP response header and, for historical reasons, through HTML meta
 tags originally developed in 1996. Additionally it moves the HTTP response
 header out of the experimental header space (i.e., "X-") and defines the
 combinability of multiple headers, which was previously not possible. 
@@ -1085,7 +1085,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
 <p id="section-abstract-1">This document extends RFC9309 by specifying additional URL level controls
-through an HTTP response header and, foir historical reasons, through HTML meta
+through an HTTP response header and, for historical reasons, through HTML meta
 tags originally developed in 1996. Additionally it moves the HTTP response
 header out of the experimental header space (i.e., "X-") and defines the
 combinability of multiple headers, which was previously not possible.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
@@ -1251,7 +1251,7 @@ ways:<a href="#section-3.1-1" class="pilcrow">¶</a></p>
 <span>[<a href="#STRUCTURED-FIELD-VALUES" class="cite xref">STRUCTURED-FIELD-VALUES</a>]</span>.<a href="#section-3.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.1-2.2">
-            <p id="section-3.1-2.2.1">for hiostorical reasons, in case of HTML, one or more meta tags as defined by
+            <p id="section-3.1-2.2.1">for historical reasons, in case of HTML, one or more meta tags as defined by
 the <span>[<a href="#HTML-META" class="cite xref">HTML-META</a>]</span> specification.<a href="#section-3.1-2.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
@@ -1263,7 +1263,7 @@ the <span>[<a href="#HTML-META" class="cite xref">HTML-META</a>]</span> specific
 <p id="section-3.1.1-1">The <code>robots-tag</code> field is a List as defined in <span>[<a href="#STRUCTURED-FIELD-VALUES" class="cite xref">STRUCTURED-FIELD-VALUES</a>]</span>. Each
 member of the List is an Item representing a product token. Rules applicable to
 a product token are defined as Parameters of that Item. For historical reasons,
-implementors <span class="bcp14">SHOULD</span> also support the experimental field name x-robots-tag.<a href="#section-3.1.1-1" class="pilcrow">¶</a></p>
+implementors <span class="bcp14">SHOULD</span> also support the experimental field name <code>X-Robots-Tag</code>.<a href="#section-3.1.1-1" class="pilcrow">¶</a></p>
 <p id="section-3.1.1-2">The product token is either a specific string as defined in
 Section 2.2.1 of <span>[<a href="#ROBOTSTXT" class="cite xref">ROBOTSTXT</a>]</span> or the global identifier <code>*</code>. All rules defined
 in this specification are restrictive. The absence of a rule for a specific
@@ -1416,7 +1416,7 @@ procedures defined in Section 18.4 of <span>[<a href="#HTTP-SEMANTICS" class="ci
 <p id="section-5.1-3">Template: None<a href="#section-5.1-3" class="pilcrow">¶</a></p>
 <p id="section-5.1-4">Status: permanent<a href="#section-5.1-4" class="pilcrow">¶</a></p>
 <p id="section-5.1-5">Reference: [This document]<a href="#section-5.1-5" class="pilcrow">¶</a></p>
-<p id="section-5.1-6">Comments: This field name supersedes the experimental X-Robots-Tag field.<a href="#section-5.1-6" class="pilcrow">¶</a></p>
+<p id="section-5.1-6">Comments: This field name supersedes the experimental <code>X-Robots-Tag</code> field.<a href="#section-5.1-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="robots-control-rules-registry">
@@ -1432,10 +1432,10 @@ as defined in <span>[<a href="#IANA-GUIDELINES" class="cite xref">IANA-GUIDELINE
 <p id="section-5.2-3">The initial entries for this registry are:<a href="#section-5.2-3" class="pilcrow">¶</a></p>
 <p id="section-5.2-4">Rule Name: noindex<a href="#section-5.2-4" class="pilcrow">¶</a></p>
 <p id="section-5.2-5">Description: Instructs the parser to not store the served data in its publicly accessible index.<a href="#section-5.2-5" class="pilcrow">¶</a></p>
-<p id="section-5.2-6">Reference: [This document, Section 2.1.3]<a href="#section-5.2-6" class="pilcrow">¶</a></p>
+<p id="section-5.2-6">Reference: [This document, Section 3.1.3]<a href="#section-5.2-6" class="pilcrow">¶</a></p>
 <p id="section-5.2-7">Rule Name: nosnippet<a href="#section-5.2-7" class="pilcrow">¶</a></p>
 <p id="section-5.2-8">Description: Instructs the parser to not reproduce any stored data as an excerpt snippet.<a href="#section-5.2-8" class="pilcrow">¶</a></p>
-<p id="section-5.2-9">Reference: [This document, Section 2.1.3]<a href="#section-5.2-9" class="pilcrow">¶</a></p>
+<p id="section-5.2-9">Reference: [This document, Section 3.1.3]<a href="#section-5.2-9" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="deprecation-of-x-robots-tag">

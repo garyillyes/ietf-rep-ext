@@ -14,11 +14,11 @@ Expires: 20 October 2026
 Abstract
 
    This document extends RFC9309 by specifying additional URL level
-   controls through an HTTP response header and, foir historical
-   reasons, through HTML meta tags originally developed in 1996.
-   Additionally it moves the HTTP response header out of the
-   experimental header space (i.e., "X-") and defines the combinability
-   of multiple headers, which was previously not possible.
+   controls through an HTTP response header and, for historical reasons,
+   through HTML meta tags originally developed in 1996.  Additionally it
+   moves the HTTP response header out of the experimental header space
+   (i.e., "X-") and defines the combinability of multiple headers, which
+   was previously not possible.
 
 Status of This Memo
 
@@ -108,7 +108,7 @@ Table of Contents
    *  an HTTP response header structured field as specified by
       [STRUCTURED-FIELD-VALUES].
 
-   *  for hiostorical reasons, in case of HTML, one or more meta tags as
+   *  for historical reasons, in case of HTML, one or more meta tags as
       defined by the [HTML-META] specification.
 
 3.1.1.  HTTP Response Header
@@ -117,8 +117,8 @@ Table of Contents
    [STRUCTURED-FIELD-VALUES].  Each member of the List is an Item
    representing a product token.  Rules applicable to a product token
    are defined as Parameters of that Item.  For historical reasons,
-   implementors SHOULD also support the experimental field name x-
-   robots-tag.
+   implementors SHOULD also support the experimental field name X-
+   Robots-Tag.
 
    The product token is either a specific string as defined in
    Section 2.2.1 of [ROBOTSTXT] or the global identifier *. All rules
@@ -282,14 +282,14 @@ Table of Contents
    Description: Instructs the parser to not store the served data in its
    publicly accessible index.
 
-   Reference: [This document, Section 2.1.3]
+   Reference: [This document, Section 3.1.3]
 
    Rule Name: nosnippet
 
    Description: Instructs the parser to not reproduce any stored data as
    an excerpt snippet.
 
-   Reference: [This document, Section 2.1.3]
+   Reference: [This document, Section 3.1.3]
 
 5.3.  Deprecation of X-Robots-Tag
 
