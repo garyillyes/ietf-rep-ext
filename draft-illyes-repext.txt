@@ -60,6 +60,8 @@ Table of Contents
        3.1.4.  Caching of values
    4.  Security Considerations
    5.  IANA Considerations
+     5.1.  HTTP Field Name Registration
+     5.2.  Deprecation of X-Robots-Tag
    6.  References
      6.1.  Normative References
      6.2.  Informative References
@@ -215,13 +217,31 @@ Table of Contents
 
 5.  IANA Considerations
 
+5.1.  HTTP Field Name Registration
+
    IANA is requested to register the following HTTP field name in the
    "Hypertext Transfer Protocol (HTTP) Field Name Registry" according to
    the procedures defined in Section 18.4 of [HTTP-SEMANTICS]:
 
-   Field Name: Robots-Tag Template: None Status: permanent Reference:
-   [This document] Comments: This field name replaces the historical and
-   experimental X-Robots-Tag.
+   Field Name: Robots-Tag
+
+   Template: None
+
+   Status: permanent
+
+   Reference: [This document]
+
+   Comments: This field name supersedes the experimental X-Robots-Tag
+   field.
+
+5.2.  Deprecation of X-Robots-Tag
+
+   The X-Robots-Tag field name was used prior to the standardization of
+   the Robots-Tag field.  New implementations MUST NOT use the X- prefix
+   for this field, adhering to the principles in [X-DEPRECATION].  While
+   parsers SHOULD continue to support X-Robots-Tag for backward
+   compatibility with legacy systems, it is formally deprecated by this
+   document.
 
 6.  References
 
@@ -267,6 +287,13 @@ Table of Contents
               Nottingham, M., "Web Linking", RFC 8288,
               DOI 10.17487/RFC8288, October 2017,
               <https://www.rfc-editor.org/rfc/rfc8288>.
+
+   [X-DEPRECATION]
+              Saint-Andre, P., Crocker, D., and M. Nottingham,
+              "Deprecating the "X-" Prefix and Similar Constructs in
+              Application Protocols", BCP 178, RFC 6648,
+              DOI 10.17487/RFC6648, June 2012,
+              <https://www.rfc-editor.org/rfc/rfc6648>.
 
 6.2.  Informative References
 
