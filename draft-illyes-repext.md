@@ -122,7 +122,14 @@ The structured field in the examples is deserialized into the following objects:
 ~~~~~~~~
 
 Implementors SHOULD impose a parsing limit on the field value to protect their
-systems. The parsing limit MUST be at least 8 kibibytes [KiB].
+systems. The parsing limit MUST be at least 8 kibibytes {{KiB}}.
+
+For a `robots-tag` field that exceeds the implementor's parsing limit, the
+implementor MUST process the data up to that limit. Any complete and valid List
+members found within the processed bytes MUST be honored. Any partially
+transmitted or truncated List member at the limit, and all subsequent bytes in
+that field, MUST be ignored. This ensures consistency with the processing of
+`robots.txt` files as specified in Section 2.1.1 of {{ROBOTSTXT}}.
 
 ### HTML Meta Element
 
