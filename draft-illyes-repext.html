@@ -1285,6 +1285,12 @@ Robots-Tag: *;noindex;nosnippet, ExampleBot;
 </div>
 <p id="section-3.1.1-7">Implementors <span class="bcp14">SHOULD</span> impose a parsing limit on the field value to protect their
 systems. The parsing limit <span class="bcp14">MUST</span> be at least 8 kibibytes <span>[<a href="#KiB" class="cite xref">KiB</a>]</span>.<a href="#section-3.1.1-7" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-8">For a <code>robots-tag</code> field that exceeds the implementor's parsing limit, the
+implementor <span class="bcp14">MUST</span> process the data up to that limit. Any complete and valid List
+members found within the processed bytes <span class="bcp14">MUST</span> be honored. Any partially
+transmitted or truncated List member at the limit, and all subsequent bytes in
+that field, <span class="bcp14">MUST</span> be ignored. This ensures consistency with the processing of
+<code>robots.txt</code> files as specified in Section 2.1.1 of <span>[<a href="#ROBOTSTXT" class="cite xref">ROBOTSTXT</a>]</span>.<a href="#section-3.1.1-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="html-meta-element">
