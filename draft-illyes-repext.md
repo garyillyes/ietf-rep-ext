@@ -73,7 +73,7 @@ form of access authorization however.
 {::boilerplate bcp14-tagged}
 
 This specification uses the following terms from {{STRUCTURED-FIELD-VALUES}}:
-Dictionary, List, String, Parameter.
+List, String, Parameter.
 
 # Specification
 
@@ -82,24 +82,22 @@ Dictionary, List, String, Parameter.
 The URL level crawler controls are a key-value pair that can be specified two
 ways:
 
-* an application level response header structured field as specified by
+* an HTTP response header structured field as specified by
 {{STRUCTURED-FIELD-VALUES}}.
 * for hiostorical reasons, in case of HTML, one or more meta tags as defined by
 the {{HTML-META}} specification.
 
-### Application Layer Response Header
+### HTTP Response Header
 
-The HTTP response header field `robots-tag` is a structured field
-whose value is a dictionary containing list of rules applicable to either all
-accessors or specifically named ones. For historical reasons, implementors
-should also support the experimental field name, `x-robots-tag`.
+The robots-tag field is a List as defined in {{STRUCTURED-FIELD-VALUES}}. Each
+member of the List is an Item representing a product token. Rules applicable to
+a product token are defined as Parameters of that Item. For historical reasons,
+implementors SHOULD also support the experimental field name `x-robots-tag`.
 
-The value of the `robots-tag` field is a dictionary containing lists of rules.
-The rules are specific to a single product token as defined by Section 2.2.1. of
-{{ROBOTSTXT}} or a global identifier — "*". The product token is the first
-element of each list.
-
-Duplicate product tokens must be merged and the rules deduplicated.
+The product token is either a specific string as defined in
+Section 2.2.1 of {{ROBOTSTXT}} or the global identifier `*`. If a product token
+appears multiple times in the field, the Parameters from all instances MUST be
+merged and deduplicated.
 
 For example, the following response header field specifies `noindex` and
 `nosnippet` rules for all accessors, however specifies no rules for the product
@@ -125,7 +123,7 @@ The structured field in the examples is deserialized into the following objects:
 Implementors SHOULD impose a parsing limit on the field value to protect their
 systems. The parsing limit MUST be at least 8 kibibytes [KiB].
 
-### HTML meta element
+### HTML Meta Element
 
 For historical reasons the `robots-tag` header values may be specified by
 HTML service owners as an HTML meta tag. In case of the meta tag, the name
