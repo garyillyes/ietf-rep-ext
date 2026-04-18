@@ -121,11 +121,11 @@ The structured field in the examples is deserialized into the following objects:
 
 ~~~~~~~~
 "*" = [
-       ["nosnippet", true]
+        ["nosnippet", true]
       ],
 "ExampleBot" = [
-      ["noindex", true],
-      ["nosnippet", true]
+        ["noindex", true],
+        ["nosnippet", true]
       ]
 ~~~~~~~~
 
