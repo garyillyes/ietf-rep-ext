@@ -21,12 +21,13 @@ author:
     country: "Switzerland"
     email: "garyillyes@google.com"
 normative:
-  WEBLINKING: rfc8288
-  STRUCTURED-FIELD-VALUES: rfc8941
   HTTP-CACHING: rfc9111
   HTTP-SEMANTICS: rfc9110
   ROBOTSTXT: rfc9309
+  STRUCTURED-FIELD-VALUES: rfc8941
   TLS: rfc8446
+  WEBLINKING: rfc8288
+  X-DEPRECATION: rfc6648
 informative:
   KiB:
     target: https://simple.wikipedia.org/wiki/Kibibyte
@@ -194,15 +195,30 @@ on how much data they will parse; see section N for the lower limit.
 
 # IANA Considerations
 
+## HTTP Field Name Registration
+
 IANA is requested to register the following HTTP field name in the
 "Hypertext Transfer Protocol (HTTP) Field Name Registry" according to the
 procedures defined in Section 18.4 of {{HTTP-SEMANTICS}}:
 
-Field Name: `Robots-Tag`
+Field Name: Robots-Tag
+
 Template: None
+
 Status: permanent
+
 Reference: [This document]
-Comments: This field name replaces the historical and experimental `X-Robots-Tag`.
+
+Comments: This field name supersedes the experimental X-Robots-Tag field.
+
+
+## Deprecation of `X-Robots-Tag`
+
+The `X-Robots-Tag` field name was used prior to the standardization of the
+`Robots-Tag` field. New implementations MUST NOT use the `X-` prefix for this
+field, adhering to the principles in {{X-DEPRECATION}}. While parsers SHOULD
+continue to support `X-Robots-Tag` for backward compatibility with legacy
+systems, it is formally deprecated by this document.
 
 
 --- back
