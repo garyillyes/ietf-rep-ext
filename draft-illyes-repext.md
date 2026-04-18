@@ -45,7 +45,7 @@ informative:
 --- abstract
 
 This document extends RFC9309 by specifying additional URL level controls
-through an HTTP response header and, foir historical reasons, through HTML meta
+through an HTTP response header and, for historical reasons, through HTML meta
 tags originally developed in 1996. Additionally it moves the HTTP response
 header out of the experimental header space (i.e., "X-") and defines the
 combinability of multiple headers, which was previously not possible.
@@ -86,7 +86,7 @@ ways:
 
 * an HTTP response header structured field as specified by
 {{STRUCTURED-FIELD-VALUES}}.
-* for hiostorical reasons, in case of HTML, one or more meta tags as defined by
+* for historical reasons, in case of HTML, one or more meta tags as defined by
 the {{HTML-META}} specification.
 
 ### HTTP Response Header
@@ -94,7 +94,7 @@ the {{HTML-META}} specification.
 The `robots-tag` field is a List as defined in {{STRUCTURED-FIELD-VALUES}}. Each
 member of the List is an Item representing a product token. Rules applicable to
 a product token are defined as Parameters of that Item. For historical reasons,
-implementors SHOULD also support the experimental field name x-robots-tag.
+implementors SHOULD also support the experimental field name `X-Robots-Tag`.
 
 The product token is either a specific string as defined in
 Section 2.2.1 of {{ROBOTSTXT}} or the global identifier `*`. All rules defined
@@ -237,7 +237,7 @@ Status: permanent
 
 Reference: [This document]
 
-Comments: This field name supersedes the experimental X-Robots-Tag field.
+Comments: This field name supersedes the experimental `X-Robots-Tag` field.
 
 ## Robots Control Rules Registry
 
@@ -254,13 +254,13 @@ Rule Name: noindex
 
 Description: Instructs the parser to not store the served data in its publicly accessible index.
 
-Reference: [This document, Section 2.1.3]
+Reference: [This document, Section 3.1.3]
 
 Rule Name: nosnippet
 
 Description: Instructs the parser to not reproduce any stored data as an excerpt snippet.
 
-Reference: [This document, Section 2.1.3]
+Reference: [This document, Section 3.1.3]
 
 ## Deprecation of `X-Robots-Tag`
 
