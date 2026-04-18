@@ -90,23 +90,29 @@ the {{HTML-META}} specification.
 
 ### HTTP Response Header
 
-The robots-tag field is a List as defined in {{STRUCTURED-FIELD-VALUES}}. Each
+The `robots-tag` field is a List as defined in {{STRUCTURED-FIELD-VALUES}}. Each
 member of the List is an Item representing a product token. Rules applicable to
 a product token are defined as Parameters of that Item. For historical reasons,
-implementors SHOULD also support the experimental field name `x-robots-tag`.
+implementors SHOULD also support the experimental field name x-robots-tag.
 
 The product token is either a specific string as defined in
-Section 2.2.1 of {{ROBOTSTXT}} or the global identifier `*`. If a product token
-appears multiple times in the field, the Parameters from all instances MUST be
-merged and deduplicated.
+Section 2.2.1 of {{ROBOTSTXT}} or the global identifier `*`. All rules defined
+in this specification are restrictive. The absence of a rule for a specific
+instruction constitutes as no instruction.
 
-For example, the following response header field specifies `noindex` and
-`nosnippet` rules for all accessors, however specifies no rules for the product
-token `ExampleBot`:
+If a product token appears multiple times in the field, or if rules are
+provided for both a specific product token and the global `*` identifier, the
+implementor MUST apply the union of all restrictive rules. A restriction applied
+to the global `*` token applies to all accessors regardless of whether a
+specific product token is present.
+
+For example, the following response header field specifies a global
+`nosnippet` rule for all accessors, and an additional `noindex` rule
+specifically for `ExampleBot`:
 
 
 ~~~~~~~~
-Robots-Tag: *;noindex;nosnippet, ExampleBot;
+Robots-Tag: *;nosnippet, ExampleBot;noindex
 ~~~~~~~~
 
 
@@ -115,10 +121,12 @@ The structured field in the examples is deserialized into the following objects:
 
 ~~~~~~~~
 "*" = [
-       ["noindex", true],
        ["nosnippet", true]
       ],
-"ExampleBot" = []
+"ExampleBot" = [
+      ["noindex", true],
+      ["nosnippet", true]
+      ]
 ~~~~~~~~
 
 Implementors SHOULD impose a parsing limit on the field value to protect their
@@ -147,9 +155,16 @@ applicable to a single requestor. For example:
 <meta name="examplebot" content="nosnippet">
 ~~~~~~~~
 
-Multiple robots meta elements may appear in a single HTML document. Requestors
-must obey the sum of negative rules specific to their product token and the
-global product token.
+Multiple robots meta elements may appear in a single HTML document. The
+implementor MUST apply the union of all rules found in all applicable elements.
+This includes rules specified for the global `robots` token and rules specified
+for the accessor's specific product token.
+
+Because all rules specified in this document are restrictive, they are
+inherently additive. An accessor cannot "opt-out" of a restriction defined in a
+global 'robots' tag by being mentioned in a specific tag without that
+restriction. If any applicable tag contains a restrictive rule, that rule MUST
+be honored.
 
 ### Robots controls rules
 
