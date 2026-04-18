@@ -1328,10 +1328,17 @@ excerpt snippet.<a href="#section-3.1.3-2.2.1" class="pilcrow">¶</a></p>
           <h4 id="name-caching-of-values">
 <a href="#section-3.1.4" class="section-number selfRef">3.1.4. </a><a href="#name-caching-of-values" class="section-name selfRef">Caching of values</a>
           </h4>
-<p id="section-3.1.4-1">The rules specified for a specific product token <span class="bcp14">MUST</span> be obeyed until the rules
-have changed. Implementors <span class="bcp14">MAY</span> use standard cache control as defined in
-<span>[<a href="#HTTP-CACHING" class="cite xref">HTTP-CACHING</a>]</span> for caching <code>robots-tag</code> rules. Implementors <span class="bcp14">SHOULD</span> refresh
-their caches within a reasonable time frame.<a href="#section-3.1.4-1" class="pilcrow">¶</a></p>
+<p id="section-3.1.4-1">Implementors <span class="bcp14">SHOULD</span> link the validity of robots-tag rules to the freshness of
+the associated resource. Rules extracted from an HTTP response header or an HTML
+<code>meta</code> tag remain in effect until the resource is recrawled or the cached
+representation expires.<a href="#section-3.1.4-1" class="pilcrow">¶</a></p>
+<p id="section-3.1.4-2">Implementors <span class="bcp14">SHOULD</span> determine the freshness of the rules using standard HTTP
+cache directives, such as <code>Cache-Control</code> or <code>Expires</code>, as defined in
+<span>[<a href="#HTTP-SEMANTICS" class="cite xref">HTTP-SEMANTICS</a>]</span>. In the absence of explicit cache directives, implementors
+<span class="bcp14">MAY</span> use heuristics to determine the refresh interval, typically matching the
+scheduled recrawl frequency of the resource.<a href="#section-3.1.4-2" class="pilcrow">¶</a></p>
+<p id="section-3.1.4-3">If a resource is not recrawled due to a lack of perceived change, the last known
+<code>robots-tag</code> rules <span class="bcp14">MUST</span> continue to be honored.<a href="#section-3.1.4-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>

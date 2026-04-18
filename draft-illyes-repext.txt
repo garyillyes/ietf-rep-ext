@@ -176,11 +176,20 @@ Table of Contents
 
 3.1.4.  Caching of values
 
-   The rules specified for a specific product token MUST be obeyed until
-   the rules have changed.  Implementors MAY use standard cache control
-   as defined in [HTTP-CACHING] for caching robots-tag rules.
-   Implementors SHOULD refresh their caches within a reasonable time
-   frame.
+   Implementors SHOULD link the validity of robots-tag rules to the
+   freshness of the associated resource.  Rules extracted from an HTTP
+   response header or an HTML meta tag remain in effect until the
+   resource is recrawled or the cached representation expires.
+
+   Implementors SHOULD determine the freshness of the rules using
+   standard HTTP cache directives, such as Cache-Control or Expires, as
+   defined in [HTTP-SEMANTICS].  In the absence of explicit cache
+   directives, implementors MAY use heuristics to determine the refresh
+   interval, typically matching the scheduled recrawl frequency of the
+   resource.
+
+   If a resource is not recrawled due to a lack of perceived change, the
+   last known robots-tag rules MUST continue to be honored.
 
 4.  Security Considerations
 
