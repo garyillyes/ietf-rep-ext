@@ -219,8 +219,8 @@ union of all restrictive rules identified in both the initial HTML source and
 the final DOM state. A restriction present in either state MUST be honored.
 
 To protect against memory overflow attacks, implementers should enforce a limit
-on how much data they will parse; see [Section 3.1.1](#section-3.1.1)
-for the lower limit.
+on how much data they will parse; see
+[Section 3.1.1](#name-http-response-header) for the lower limit.
 
 # IANA Considerations
 
