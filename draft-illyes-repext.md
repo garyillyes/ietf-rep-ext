@@ -23,6 +23,7 @@ author:
 normative:
   HTTP-CACHING: rfc9111
   HTTP-SEMANTICS: rfc9110
+  IANA-GUIDELINES: rfc8126
   ROBOTSTXT: rfc9309
   STRUCTURED-FIELD-VALUES: rfc8941
   TLS: rfc8446
@@ -212,8 +213,14 @@ In case of a `robots-tag` specified in a HTML meta element, implementors should
 consider only the `meta` elements specified in the head element of the HTML
 document, which is generally only accessible to the service owner.
 
+Implementors who execute client-side code MUST NOT treat the post-execution DOM
+state as the exclusive source of truth. Instead, implementors MUST apply the
+union of all restrictive rules identified in both the initial HTML source and
+the final DOM state. A restriction present in either state MUST be honored.
+
 To protect against memory overflow attacks, implementers should enforce a limit
-on how much data they will parse; see section N for the lower limit.
+on how much data they will parse; see [Section 3.1.1](#section-3.1.1)
+for the lower limit.
 
 # IANA Considerations
 
@@ -233,6 +240,28 @@ Reference: [This document]
 
 Comments: This field name supersedes the experimental X-Robots-Tag field.
 
+## Robots Control Rules Registry
+
+IANA is requested to create a new "Robots Control Rules" registry. This registry
+manages the tokens used as parameters within the `Robots-Tag` HTTP field and,
+by extension, the `content` attribute of the `robots` `meta` element.
+
+The registration policy for this registry is "IETF Review" or "Expert Review"
+as defined in {{IANA-GUIDELINES}}.
+
+The initial entries for this registry are:
+
+Rule Name: noindex
+
+Description: Instructs the parser to not store the served data in its publicly accessible index.
+
+Reference: [This document, Section 2.1.3]
+
+Rule Name: nosnippet
+
+Description: Instructs the parser to not reproduce any stored data as an excerpt snippet.
+
+Reference: [This document, Section 2.1.3]
 
 ## Deprecation of `X-Robots-Tag`
 
