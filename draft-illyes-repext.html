@@ -1148,10 +1148,10 @@ combinability of multiple headers, which was previously not possible.<a href="#s
                 <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-robots-control" class="internal xref">Robots control</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.1">
-                    <p id="section-toc.1-1.3.2.1.2.1.1" class="keepWithNext"><a href="#section-3.1.1" class="auto internal xref">3.1.1</a>.  <a href="#name-application-layer-response-" class="internal xref">Application Layer Response Header</a></p>
+                    <p id="section-toc.1-1.3.2.1.2.1.1" class="keepWithNext"><a href="#section-3.1.1" class="auto internal xref">3.1.1</a>.  <a href="#name-http-response-header" class="internal xref">HTTP Response Header</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.2">
-                    <p id="section-toc.1-1.3.2.1.2.2.1"><a href="#section-3.1.2" class="auto internal xref">3.1.2</a>.  <a href="#name-html-meta-element" class="internal xref">HTML meta element</a></p>
+                    <p id="section-toc.1-1.3.2.1.2.2.1"><a href="#section-3.1.2" class="auto internal xref">3.1.2</a>.  <a href="#name-html-meta-element" class="internal xref">HTML Meta Element</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.3">
                     <p id="section-toc.1-1.3.2.1.2.3.1"><a href="#section-3.1.3" class="auto internal xref">3.1.3</a>.  <a href="#name-robots-controls-rules" class="internal xref">Robots controls rules</a></p>
@@ -1219,7 +1219,7 @@ form of access authorization however.<a href="#section-1-3" class="pilcrow">¶</
 described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they
 appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
 <p id="section-2-2">This specification uses the following terms from <span>[<a href="#STRUCTURED-FIELD-VALUES" class="cite xref">STRUCTURED-FIELD-VALUES</a>]</span>:
-Dictionary, List, String, Parameter.<a href="#section-2-2" class="pilcrow">¶</a></p>
+List, String, Parameter.<a href="#section-2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="specification">
@@ -1236,7 +1236,7 @@ Dictionary, List, String, Parameter.<a href="#section-2-2" class="pilcrow">¶</a
 ways:<a href="#section-3.1-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.1-2.1">
-            <p id="section-3.1-2.1.1">an application level response header structured field as specified by
+            <p id="section-3.1-2.1.1">an HTTP response header structured field as specified by
 <span>[<a href="#STRUCTURED-FIELD-VALUES" class="cite xref">STRUCTURED-FIELD-VALUES</a>]</span>.<a href="#section-3.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.1-2.2">
@@ -1244,46 +1244,45 @@ ways:<a href="#section-3.1-1" class="pilcrow">¶</a></p>
 the <span>[<a href="#HTML-META" class="cite xref">HTML-META</a>]</span> specification.<a href="#section-3.1-2.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<div id="application-layer-response-header">
+<div id="http-response-header">
 <section id="section-3.1.1">
-          <h4 id="name-application-layer-response-">
-<a href="#section-3.1.1" class="section-number selfRef">3.1.1. </a><a href="#name-application-layer-response-" class="section-name selfRef">Application Layer Response Header</a>
+          <h4 id="name-http-response-header">
+<a href="#section-3.1.1" class="section-number selfRef">3.1.1. </a><a href="#name-http-response-header" class="section-name selfRef">HTTP Response Header</a>
           </h4>
-<p id="section-3.1.1-1">The HTTP response header field <code>robots-tag</code> is a structured field
-whose value is a dictionary containing list of rules applicable to either all
-accessors or specifically named ones. For historical reasons, implementors
-should also support the experimental field name, <code>x-robots-tag</code>.<a href="#section-3.1.1-1" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-2">The value of the <code>robots-tag</code> field is a dictionary containing lists of rules.
-The rules are specific to a single product token as defined by Section 2.2.1. of
-<span>[<a href="#ROBOTSTXT" class="cite xref">ROBOTSTXT</a>]</span> or a global identifier — "*". The product token is the first
-element of each list.<a href="#section-3.1.1-2" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-3">Duplicate product tokens must be merged and the rules deduplicated.<a href="#section-3.1.1-3" class="pilcrow">¶</a></p>
-<p id="section-3.1.1-4">For example, the following response header field specifies <code>noindex</code> and
+<p id="section-3.1.1-1">The robots-tag field is a List as defined in <span>[<a href="#STRUCTURED-FIELD-VALUES" class="cite xref">STRUCTURED-FIELD-VALUES</a>]</span>. Each
+member of the List is an Item representing a product token. Rules applicable to
+a product token are defined as Parameters of that Item. For historical reasons,
+implementors <span class="bcp14">SHOULD</span> also support the experimental field name <code>x-robots-tag</code>.<a href="#section-3.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-2">The product token is either a specific string as defined in
+Section 2.2.1 of <span>[<a href="#ROBOTSTXT" class="cite xref">ROBOTSTXT</a>]</span> or the global identifier <code>*</code>. If a product token
+appears multiple times in the field, the Parameters from all instances <span class="bcp14">MUST</span> be
+merged and deduplicated.<a href="#section-3.1.1-2" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-3">For example, the following response header field specifies <code>noindex</code> and
 <code>nosnippet</code> rules for all accessors, however specifies no rules for the product
-token <code>ExampleBot</code>:<a href="#section-3.1.1-4" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-3.1.1-5">
+token <code>ExampleBot</code>:<a href="#section-3.1.1-3" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-3.1.1-4">
 <pre>
 Robots-Tag: *;noindex;nosnippet, ExampleBot;
-</pre><a href="#section-3.1.1-5" class="pilcrow">¶</a>
+</pre><a href="#section-3.1.1-4" class="pilcrow">¶</a>
 </div>
-<p id="section-3.1.1-6">The structured field in the examples is deserialized into the following objects:<a href="#section-3.1.1-6" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-3.1.1-7">
+<p id="section-3.1.1-5">The structured field in the examples is deserialized into the following objects:<a href="#section-3.1.1-5" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-3.1.1-6">
 <pre>
 "*" = [
        ["noindex", true],
        ["nosnippet", true]
       ],
 "ExampleBot" = []
-</pre><a href="#section-3.1.1-7" class="pilcrow">¶</a>
+</pre><a href="#section-3.1.1-6" class="pilcrow">¶</a>
 </div>
-<p id="section-3.1.1-8">Implementors <span class="bcp14">SHOULD</span> impose a parsing limit on the field value to protect their
-systems. The parsing limit <span class="bcp14">MUST</span> be at least 8 kibibytes <span>[<a href="#KiB" class="cite xref">KiB</a>]</span>.<a href="#section-3.1.1-8" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-7">Implementors <span class="bcp14">SHOULD</span> impose a parsing limit on the field value to protect their
+systems. The parsing limit <span class="bcp14">MUST</span> be at least 8 kibibytes <span>[<a href="#KiB" class="cite xref">KiB</a>]</span>.<a href="#section-3.1.1-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="html-meta-element">
 <section id="section-3.1.2">
           <h4 id="name-html-meta-element">
-<a href="#section-3.1.2" class="section-number selfRef">3.1.2. </a><a href="#name-html-meta-element" class="section-name selfRef">HTML meta element</a>
+<a href="#section-3.1.2" class="section-number selfRef">3.1.2. </a><a href="#name-html-meta-element" class="section-name selfRef">HTML Meta Element</a>
           </h4>
 <p id="section-3.1.2-1">For historical reasons the <code>robots-tag</code> header values may be specified by
 HTML service owners as an HTML meta tag. In case of the meta tag, the name

@@ -54,8 +54,8 @@ Table of Contents
    2.  Conventions and Definitions
    3.  Specification
      3.1.  Robots control
-       3.1.1.  Application Layer Response Header
-       3.1.2.  HTML meta element
+       3.1.1.  HTTP Response Header
+       3.1.2.  HTML Meta Element
        3.1.3.  Robots controls rules
        3.1.4.  Caching of values
    4.  Security Considerations
@@ -93,7 +93,7 @@ Table of Contents
    capitals, as shown here.
 
    This specification uses the following terms from
-   [STRUCTURED-FIELD-VALUES]: Dictionary, List, String, Parameter.
+   [STRUCTURED-FIELD-VALUES]: List, String, Parameter.
 
 3.  Specification
 
@@ -102,26 +102,25 @@ Table of Contents
    The URL level crawler controls are a key-value pair that can be
    specified two ways:
 
-   *  an application level response header structured field as specified
-      by [STRUCTURED-FIELD-VALUES].
+   *  an HTTP response header structured field as specified by
+      [STRUCTURED-FIELD-VALUES].
 
    *  for hiostorical reasons, in case of HTML, one or more meta tags as
       defined by the [HTML-META] specification.
 
-3.1.1.  Application Layer Response Header
+3.1.1.  HTTP Response Header
 
-   The HTTP response header field robots-tag is a structured field whose
-   value is a dictionary containing list of rules applicable to either
-   all accessors or specifically named ones.  For historical reasons,
-   implementors should also support the experimental field name, x-
+   The robots-tag field is a List as defined in
+   [STRUCTURED-FIELD-VALUES].  Each member of the List is an Item
+   representing a product token.  Rules applicable to a product token
+   are defined as Parameters of that Item.  For historical reasons,
+   implementors SHOULD also support the experimental field name x-
    robots-tag.
 
-   The value of the robots-tag field is a dictionary containing lists of
-   rules.  The rules are specific to a single product token as defined
-   by Section 2.2.1. of [ROBOTSTXT] or a global identifier — "*".  The
-   product token is the first element of each list.
-
-   Duplicate product tokens must be merged and the rules deduplicated.
+   The product token is either a specific string as defined in
+   Section 2.2.1 of [ROBOTSTXT] or the global identifier *. If a product
+   token appears multiple times in the field, the Parameters from all
+   instances MUST be merged and deduplicated.
 
    For example, the following response header field specifies noindex
    and nosnippet rules for all accessors, however specifies no rules for
@@ -142,7 +141,7 @@ Table of Contents
    protect their systems.  The parsing limit MUST be at least 8
    kibibytes [KiB].
 
-3.1.2.  HTML meta element
+3.1.2.  HTML Meta Element
 
    For historical reasons the robots-tag header values may be specified
    by HTML service owners as an HTML meta tag.  In case of the meta tag,
