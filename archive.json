@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-16T02:07:22.381940+00:00",
+  "timestamp": "2026-04-19T02:07:27.913668+00:00",
   "repo": "garyillyes/ietf-rep-ext",
   "labels": [
     {
@@ -49,6 +49,25 @@
       "color": "ffffff"
     }
   ],
-  "issues": [],
+  "issues": [
+    {
+      "number": 1,
+      "id": "I_kwDONCUikM7_ZrYm",
+      "title": "Several issues in section titled \"Application Layer Response Header\"",
+      "url": "https://github.com/garyillyes/ietf-rep-ext/issues/1",
+      "state": "CLOSED",
+      "author": "garyillyes",
+      "authorAssociation": "OWNER",
+      "assignees": [
+        "garyillyes"
+      ],
+      "labels": [],
+      "body": "1. Upon closer inspection the structured field doesn't parse. Update to `Robots-Tag: ;noindex;nosnippet, examplebot `\n2. Use HTTP, don't abstract to \"Application layer\".",
+      "createdAt": "2026-04-17T19:39:57Z",
+      "updatedAt": "2026-04-18T17:55:05Z",
+      "closedAt": "2026-04-18T17:55:05Z",
+      "comments": []
+    }
+  ],
   "pulls": []
 }
