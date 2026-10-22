@@ -7,7 +7,7 @@ docname: draft-illyes-repext-latest
 submissiontype: independent  # also: "independent", "editorial", "IAB", or "
 number:
 date:
-v: 4
+v: 5
 keyword:
  - robots.txt
 
