@@ -4,8 +4,8 @@
 
 Network Working Group                                          G. Illyes
 Internet-Draft                                               Google LLC.
-Intended status: Informational                             18 April 2026
-Expires: 20 October 2026
+Intended status: Informational                           22 October 2026
+Expires: 25 April 2027
 
 
        Robots Exclusion Protocol Extension for URL Level Control
@@ -35,7 +35,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 20 October 2026.
+   This Internet-Draft will expire on 25 April 2027.
 
 Copyright Notice
 
